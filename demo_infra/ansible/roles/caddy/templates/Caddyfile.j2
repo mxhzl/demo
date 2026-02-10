@@ -1,0 +1,10 @@
+demo.mxhzl.com {
+	root * {{ file_server_dir }}/demo
+        encode
+        file_server
+
+        handle_errors {
+                rewrite * /{err.status_code}.html
+                file_server
+        }
+}

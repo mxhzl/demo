@@ -1,0 +1,6 @@
+[env]
+_.file = ".env.json"
+
+[tools]
+terraform = "latest"
+python = "latest"

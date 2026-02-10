@@ -1,0 +1,44 @@
+- name: Install required system packages
+  ansible.builtin.apt:
+    pkg:
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+      - curl
+    state: present
+    update_cache: true
+
+- name: Add Caddy GPG apt Key
+  ansible.builtin.apt_key:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    state: present
+
+- name: Add Caddy Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    state: present
+
+- name: Add source repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb-src https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    state: present
+
+- name: Update apt and install caddy
+  ansible.builtin.apt:
+    name: caddy
+    state: present
+    update_cache: true
+
+- name: Copy Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "/etc/caddy/Caddyfile"
+    mode: "0644"
+    owner: "root"
+    group: "root"
+
+- name: Ensure caddy is reloaded
+  ansible.builtin.service:
+    name: caddy
+    state: reloaded
+    enabled: true

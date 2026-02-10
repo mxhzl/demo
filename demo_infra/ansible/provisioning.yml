@@ -1,0 +1,16 @@
+---
+- name: Install python
+  hosts: production
+  gather_facts: false # gathering facts (and Ansible in general) won't work until Python is installed
+  tasks:
+    - name: Install Python 3
+      ansible.builtin.raw: sudo apt-get update -qq && sudo apt-get install -qq python3
+      register: raw_output
+      changed_when: raw_output.rc != 0
+
+- name: Run provisioning roles
+  hosts: production
+  roles:
+    - role: user_setup
+    - role: security
+    - role: swapfile

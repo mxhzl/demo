@@ -1,0 +1,14 @@
+---
+- name: Prepares server for my demo website
+  hosts: production
+  remote_user: "{{ admin_user }}"
+  become: true
+  roles:
+    - role: vault
+    - role: caddy
+  tasks:
+    - name: Ensure file server directory exists
+      ansible.builtin.file:
+        path: "{{ file_server_dir }}/demo"
+        state: directory
+        mode: "0777"

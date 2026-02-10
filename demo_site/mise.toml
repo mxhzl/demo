@@ -1,0 +1,6 @@
+[tools]
+zola = "latest"
+
+[env]
+USER = "maxine"
+HOST = "165.245.154.64"
