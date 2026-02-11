@@ -1,4 +1,4 @@
-demo.mxhzl.com {
+mxhzl.com {
 	root * {{ file_server_dir }}/demo
         encode
         file_server
@@ -7,4 +7,8 @@ demo.mxhzl.com {
                 rewrite * /{err.status_code}.html
                 file_server
         }
+}
+
+www.mxhzl.com {
+	redir https://mxhzl.com{uri}
 }
